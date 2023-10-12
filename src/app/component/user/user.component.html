@@ -1,10 +1,105 @@
 <div class="card">
   <div class="card-header">
-    <h3 class="card-title">DataTable with minimal features & hover style</h3>
+    <div class="text-right">
+      <button class="btn btn-sm btn-info" (click)="openModal(modalCreateUpdate, false)"><i class="fas fa-plus"></i> Thêm
+        mới</button>
+    </div>
   </div>
   <!-- /.card-header -->
-  <div class="card-body">
+  <div class="card-body p-0">
+    <ngx-datatable class="material" [rows]="UserList" [columns]="columns" [columnMode]="ColumnMode.force"
+      [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10" [loadingIndicator]="isLoading">
+      <ngx-datatable-column *ngFor="let col of columns" [name]="col.name" [prop]="col.prop" [pipe]="col.pipe"
+        [cellClass]="col.cellClass || ''">
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Tùy chọn" [sortable]="false" prop="id">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
 
+          <button class="btn btn-xs btn-default mr-2" (click)="editModal(row, modalCreateUpdate)">
+            <i class="fas fa-edit"></i>
+          </button>
+
+          <button class="btn btn-xs btn-default" (click)="deleteModal(row, template)">
+            <i class="fas fa-trash"></i>
+          </button>
+
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
   </div>
   <!-- /.card-body -->
 </div>
+
+<ng-template #modalCreateUpdate>
+  <app-popup [title]="title" (onClose)="onClosePopup()">
+    <div class="row">
+      <div class="col-md-12">
+        <form [formGroup]="UserForm" class="row">
+          <input type="text" class="d-none" formControlName="id">
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="name-User">Tên khách hàng </label>
+              <input [class.is-invalid]="formUser.get('name')?.invalid && formUser.get('name')?.touched" type="text"
+                id="name-User" class="form-control" formControlName="name"
+                placeholder="Nguyễn Văn A" />
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="email-User">Email</label>
+              <input [class.is-invalid]="formUser.get('email')?.invalid && formUser.get('email')?.touched" type="email"
+                id="email-User" class="form-control" formControlName="email" placeholder="email@mail.com" />
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="dateOfBirth-User">Năm sinh</label>
+              <input [class.is-invalid]="formUser.get('dateOfBirth')?.invalid && formUser.get('dateOfBirth')?.touched" type="text"
+                id="dateOfBirth-User" class="form-control" formControlName="dateOfBirth" placeholder="dd/mm/yyyy" bsDatepicker
+                [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD/MM/YYYY'  }" />
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="phoneNumber-User">Số điện thoại</label>
+              <input [class.is-invalid]="formUser.get('phoneNumber')?.invalid && formUser.get('phoneNumber')?.touched" type="tel"
+                id="phoneNumber-User" class="form-control" formControlName="phoneNumber" placeholder="+84 xxx xxx xxxx" />
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="address-User">Địa chỉ</label>
+              <input [class.is-invalid]="formUser.get('address')?.invalid && formUser.get('address')?.touched" type="text"
+                id="address-User" class="form-control" formControlName="address" placeholder="Địa chỉ khách hàng" />
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="pointValue-User">Điểm khách hàng</label>
+              <input [class.is-invalid]="formUser.get('pointValue')?.invalid && formUser.get('pointValue')?.touched" type="number"
+                id="pointValue-User" class="form-control" formControlName="pointValue" placeholder="Điểm khách hàng" />
+            </div>
+          </div>
+
+        </form>
+        <div class="row">
+          <div class="col-12 text-right">
+            <button class="btn btn-sm btn-success" *ngIf="!isEditable" [disabled]="isLoading || formUser.invalid"
+              (click)="createUser()"><span *ngIf="isLoading" class="spinner-border spinner-border-sm text-light"
+                role="status" aria-hidden="true"></span>THÊM</button>
+            <button class="btn btn-sm btn-warning" *ngIf="isEditable" [disabled]="isLoading"
+              (click)="updateUser()"><span *ngIf="isLoading" class="spinner-border spinner-border-sm text-light"
+                role="status" aria-hidden="true"></span>CẬP NHẬT</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </app-popup>
+</ng-template>
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Xác nhận xóa khách hàng này?</p>
+    <button type="button" class="btn btn-danger mr-2" (click)="confirm()">Xóa</button>
+    <button type="button" class="btn btn-default" (click)="decline()">Trở lại</button>
+  </div>
+</ng-template>

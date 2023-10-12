@@ -23,4 +23,5 @@ export enum ROUTE_LINK {
 export enum ROLE {
   ADMIN = 'Admin',
   S_ADMIN = 'S_Admin',
+  USER = 'User'
 }

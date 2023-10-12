@@ -1,10 +1,95 @@
 <div class="card">
   <div class="card-header">
-    <h3 class="card-title">DataTable with minimal features & hover style</h3>
+    <div class="text-right">
+      <button class="btn btn-sm btn-info" (click)="openModal(modalCreateUpdate, false)"><i class="fas fa-plus"></i> Thêm
+        mới</button>
+    </div>
   </div>
   <!-- /.card-header -->
-  <div class="card-body">
+  <div class="card-body p-0">
+    <ngx-datatable class="material" [rows]="UserSystemList" [columns]="columns" [columnMode]="ColumnMode.force"
+      [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10" [loadingIndicator]="isLoading">
+      <ngx-datatable-column *ngFor="let col of columns" [name]="col.name" [prop]="col.prop">
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Tùy chọn" [sortable]="false" prop="id">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
 
+          <button class="btn btn-xs btn-default mr-2" *ngIf="row.roleUser != 'S_Admin'" (click)="editModal(row, modalCreateUpdate)">
+            <i class="fas fa-edit"></i>
+          </button>
+
+          <button class="btn btn-xs btn-default" *ngIf="row.roleUser != 'S_Admin'" (click)="deleteModal(row, template)">
+            <i class="fas fa-trash"></i>
+          </button>
+
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
   </div>
   <!-- /.card-body -->
 </div>
+
+<ng-template #modalCreateUpdate>
+  <app-popup [title]="title" (onClose)="onClosePopup()">
+    <div class="row">
+      <div class="col-md-12">
+        <form [formGroup]="UserSystemForm" class="row">
+          <input type="text" class="d-none" formControlName="id">
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="userName-UserSystem">Tên  đăng nhập người dùng</label>
+              <input [class.is-invalid]="formUserSystem.get('userName')?.invalid && formUserSystem.get('userName')?.touched" type="text"
+                id="userName-UserSystem" class="form-control" formControlName="userName"
+                 />
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="email-UserSystem">Mật khẩu</label>
+              <p>
+                Mật khẩu sẽ được tạo tự động và gửi email đến người dùng
+              </p>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="dateOfBirth-UserSystem">Quyền</label>
+              <select class="form-control" (change)="onRoleChange($event)" formControlName="roleUser">
+                <option *ngFor="let role of roleList" [value]="role">{{role}}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="pointValue-UserSystem">Khách hàng được cấp tài khoản</label>
+              <select name="chose-user" formControlName="userId"
+                id="roleUser-UserSystem" class="form-control" (change)="onUserChange($event)">
+                <option [value]="0" disabled>--chọn khách hàng --</option>
+                <option *ngFor="let user of UserList" [value]="user.id">{{user.name}}--{{user.email}}</option>
+              </select>
+            </div>
+          </div>
+
+        </form>
+        <div class="row">
+          <div class="col-12 text-right">
+            <button class="btn btn-sm btn-success" *ngIf="!isEditable" [disabled]="isLoading || formUserSystem.invalid"
+              (click)="createUserSystem()"><span *ngIf="isLoading" class="spinner-border spinner-border-sm text-light"
+                role="status" aria-hidden="true"></span>THÊM</button>
+            <button class="btn btn-sm btn-warning" *ngIf="isEditable" [disabled]="isLoading"
+              (click)="updateUserSystem()"><span *ngIf="isLoading" class="spinner-border spinner-border-sm text-light"
+                role="status" aria-hidden="true"></span>CẬP NHẬT</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </app-popup>
+</ng-template>
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Xác nhận xóa khách hàng này?</p>
+    <button type="button" class="btn btn-danger mr-2" (click)="confirm()">Xóa</button>
+    <button type="button" class="btn btn-default" (click)="decline()">Trở lại</button>
+  </div>
+</ng-template>

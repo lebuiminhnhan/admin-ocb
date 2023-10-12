@@ -37,7 +37,7 @@ export class GiftComponent implements OnInit {
     dateTo: new FormControl('', [Validators.required]),
     dateFrom: new FormControl('', [Validators.required]),
     value: new FormControl(0, [Validators.required]),
-    isHot: new FormControl(false, [Validators.required]),
+    isHot: new FormControl(false),
     image: new FormControl('', [Validators.required]),
     description: new FormControl(''),
   });

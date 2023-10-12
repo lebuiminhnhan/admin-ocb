@@ -47,7 +47,7 @@
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label for="value-gift">Giá trị đổi quà </label>
-              <input [class.is-invalid]="formGift.get('value')?.invalid && formGift.get('value')?.touched" type="text"
+              <input [class.is-invalid]="formGift.get('value')?.invalid && formGift.get('value')?.touched" type="number"
                 id="value-gift" class="form-control" formControlName="value" placeholder="0" />
             </div>
           </div>

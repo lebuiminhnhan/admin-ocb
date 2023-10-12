@@ -35,13 +35,14 @@ export class InfoRegisterModel implements Deserializable {
   }
 }
 export class UserModel implements Deserializable {
-  id: number = 0;
+  id: any;
   name: string = "";
   dateOfBirth: string = "";
   phoneNumber: string = "";
   email: string = "";
   address: string = "";
   pointValue: number = 1000;
+
   deserialize(input: any) {
     Object.assign(this, input);
     return this;
@@ -49,6 +50,19 @@ export class UserModel implements Deserializable {
 }
 
 
+export class UserSystemModel implements Deserializable {
+  user?: UserModel = new UserModel();
+  id: any;
+  userId: any;
+  userName: string = "";
+  password: string = "";
+  roleUser: string = "";
+  deserialize(input: any) {
+    input.user = new UserModel().deserialize(input.user);
+    Object.assign(this, input);
+    return this;
+  }
+}
 export class LoginModel implements Deserializable {
   data: UserModel = new UserModel();
   token: string = "";

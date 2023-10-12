@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { Observable, map } from 'rxjs';
-import { APIResponseModel, GiftModel, InfoContactModel, InfoRegisterModel } from 'src/models/model';
+import { APIResponseModel, GiftModel, InfoContactModel, InfoRegisterModel, UserModel, UserSystemModel } from 'src/models/model';
 import { Constants, KEY_STORE } from 'src/helper/constants';
 
 @Injectable({
@@ -99,7 +99,7 @@ export class ApiService  extends BaseService {
   }
 
   deleteInfoRegister(id: number): Observable<APIResponseModel<string>> {
-    const apiUrl = Constants.API_URL + 'InfoRegister/'+ id;;
+    const apiUrl = Constants.API_URL + 'InfoRegister/'+ id;
     return this.doDelete(apiUrl);
   }
 
@@ -113,6 +113,50 @@ export class ApiService  extends BaseService {
     return this.http.get(apiUrl, {headers: options.headers, responseType: 'arraybuffer'});
   }
 
+
+  // User
+
+  getUserList(): Observable<APIResponseModel<UserModel[]>> {
+    const apiUrl = Constants.API_URL + 'User';
+    return this.doGet(apiUrl);
+  }
+  createUser(user: UserModel): Observable<APIResponseModel<UserModel>> {
+    const apiUrl = Constants.API_URL + 'User';
+    let data = user;
+    delete data.id;
+    return this.doPost(apiUrl, JSON.stringify(data));
+  }
+  updateUser(id: number, user: UserModel): Observable<APIResponseModel<UserModel>> {
+    const apiUrl = Constants.API_URL + 'User/' + id;
+    return this.doPut(apiUrl, JSON.stringify(user));
+  }
+  deleteUser(id: number): Observable<APIResponseModel<string>> {
+    const apiUrl = Constants.API_URL + 'User/' + id;
+    return this.doDelete(apiUrl);
+  }
+
+
+  // User system
+
+  getUserSystemList(): Observable<APIResponseModel<UserSystemModel[]>> {
+    const apiUrl = Constants.API_URL + 'UserSystem';
+    return this.doGet(apiUrl);
+  }
+  createUserSystem(user: UserSystemModel): Observable<APIResponseModel<UserSystemModel>> {
+    const apiUrl = Constants.API_URL + 'UserSystem';
+    let data = user;
+    delete data.id;
+    delete data.user;
+    return this.doPost(apiUrl, JSON.stringify(data));
+  }
+  updateUserSystem(id: number, user: UserSystemModel): Observable<APIResponseModel<UserSystemModel>> {
+    const apiUrl = Constants.API_URL + 'UserSystem/' + id;
+    return this.doPut(apiUrl, JSON.stringify(user));
+  }
+  deleteUserSystem(id: number): Observable<APIResponseModel<string>> {
+    const apiUrl = Constants.API_URL + 'UserSystem/' + id;
+    return this.doDelete(apiUrl);
+  }
 
 
   convertDate(date: any): string {
