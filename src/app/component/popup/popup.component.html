@@ -1,0 +1,11 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{title}}</h4>
+  <button type="button" class="btn-x close pull-right" aria-label="Close" (click)="close()">
+    <span aria-hidden="true" class="fs-1">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="content">
+    <ng-content></ng-content>
+  </div>
+</div>

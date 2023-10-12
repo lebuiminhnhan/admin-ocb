@@ -1,0 +1,119 @@
+<div class="card">
+  <div class="card-header">
+    <div class="text-right">
+      <button class="btn btn-sm btn-info" (click)="openModal(modalCreateUpdate, false)"><i class="fas fa-plus"></i> Thêm
+        mới</button>
+    </div>
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body p-0">
+    <ngx-datatable class="material" [rows]="giftList" [columns]="columns" [columnMode]="ColumnMode.force"
+      [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10" [loadingIndicator]="isLoading">
+      <ngx-datatable-column *ngFor="let col of columns" [name]="col.name" [prop]="col.prop" [pipe]="col.pipe"
+        [cellClass]="col.cellClass || ''">
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Tùy chọn" [sortable]="false" prop="id">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+
+          <button class="btn btn-xs btn-default mr-2" (click)="editModal(row, modalCreateUpdate)">
+            <i class="fas fa-edit"></i>
+          </button>
+
+          <button class="btn btn-xs btn-default" (click)="deleteModal(row, template)">
+            <i class="fas fa-trash"></i>
+          </button>
+
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+  <!-- /.card-body -->
+</div>
+
+<ng-template #modalCreateUpdate>
+  <app-popup [title]="title" (onClose)="onClosePopup()">
+    <div class="row">
+      <div class="col-md-12">
+        <form [formGroup]="giftForm" class="row">
+          <input type="text" class="d-none" formControlName="id">
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="name-gift">Tên quà tặng </label>
+              <input [class.is-invalid]="formGift.get('name')?.invalid && formGift.get('name')?.touched" type="text"
+                id="name-gift" class="form-control" formControlName="name"
+                placeholder="Phiếu giảm giá, thẻ quà tặng,..." />
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="value-gift">Giá trị đổi quà </label>
+              <input [class.is-invalid]="formGift.get('value')?.invalid && formGift.get('value')?.touched" type="text"
+                id="value-gift" class="form-control" formControlName="value" placeholder="0" />
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="dateTo-gift">Có hiệu lực từ </label>
+              <input [class.is-invalid]="formGift.get('dateTo')?.invalid && formGift.get('dateTo')?.touched" type="text"
+                id="dateTo-gift" class="form-control" formControlName="dateTo" placeholder="dd/mm/yyyy" bsDatepicker
+                [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD/MM/YYYY'  }" />
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="dateFrom-gift">Có hiệu lực đến </label>
+              <input [class.is-invalid]="formGift.get('dateFrom')?.invalid && formGift.get('dateFrom')?.touched"
+                type="text" id="dateFrom-gift" class="form-control" formControlName="dateFrom" placeholder="dd/mm/yyyy"
+                bsDatepicker [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD/MM/YYYY'  }" />
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="image">Upload ảnh</label>
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" id="image">
+                  <label class="custom-file-label" for="image">Chọn tệp tin</label>
+                </div>
+                <div class="input-group-append">
+                  <span class="input-group-text">Tải lên</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 pt-5 text-center">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="isHot" formControlName="isHot">
+              <label class="form-check-label" for="isHot">Quà HOT</label>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-12">
+            <div class="form-group">
+              <label for="name-gift">Mô tả chi tiết quà tặng </label>
+              <ckeditor [editor]="editor" formControlName="description"></ckeditor>
+            </div>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col-12 text-right">
+            <button class="btn btn-sm btn-success" *ngIf="!isEditable" [disabled]="isLoading"
+              (click)="createGift()"><span *ngIf="isLoading" class="spinner-border spinner-border-sm text-light"
+                role="status" aria-hidden="true"></span>THÊM</button>
+            <button class="btn btn-sm btn-warning" *ngIf="isEditable" [disabled]="isLoading"
+              (click)="updateGift()"><span *ngIf="isLoading" class="spinner-border spinner-border-sm text-light"
+                role="status" aria-hidden="true"></span>CẬP NHẬT</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </app-popup>
+</ng-template>
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Xác nhận xóa quà tặng này?</p>
+    <button type="button" class="btn btn-danger mr-2" (click)="confirm()">Xóa</button>
+    <button type="button" class="btn btn-default" (click)="decline()">Trở lại</button>
+  </div>
+</ng-template>

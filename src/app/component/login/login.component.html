@@ -1,0 +1,61 @@
+<div class="hold-transition login-page">
+  <div class="login-box">
+    <div class="login-logo">
+      <img src="../../../assets/img/logo.png" height="70" alt="">
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+      <div class="card-body login-card-body">
+        <p class="login-box-msg">Đăng nhập vào hệ thống Admin OCB</p>
+        <form>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" id="userName" name="userName" [(ngModel)]="userName"
+              [class.is-invalid]="InputUserName.invalid && InputUserName.touched" required
+              placeholder="Nhập tên đăng nhập của bạn" #InputUserName="ngModel">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user-alt"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="password" class="form-control" id="inputPassword" name="inputPassword" required
+              [(ngModel)]="password" [class.is-invalid]="InputPassword.invalid && InputPassword.touched" minlength="6"
+              maxlength="32" placeholder="Mật khẩu từ 6 đến 32 kí tự" #InputPassword="ngModel">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary btn-block bg-secondary" [disabled]="isLoading" (click)="login()">ĐĂNG NHẬP</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="text-danger">
+                <div *ngIf="isShowError">
+                  <small class="text-danger">{{message}}</small>
+                </div>
+                <div *ngIf="InputUserName.errors && (InputUserName.invalid && InputUserName.touched)">
+                  <small class="text-danger" *ngIf="InputUserName.errors['required']">Tên đăng nhập không được bỏ
+                    trống</small>
+                </div>
+                <div *ngIf="(InputPassword.errors && (InputPassword.invalid && InputPassword.touched))">
+                  <small class="text-danger" *ngIf="InputPassword.errors['required']">Mật khẩu không được bỏ
+                    trống</small>
+                  <small class="text-danger"
+                    *ngIf="InputPassword.errors['minlength'] || InputPassword.errors['maxlength']">Mật khẩu từ 6 đến 32
+                    kí tự</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- /.login-card-body -->
+    </div>
+  </div>
+</div>

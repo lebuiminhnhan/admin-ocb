@@ -1,1 +1,42 @@
 /* You can add global styles to this file, and also import other style files */
+@import "assets/css/adminlte.css";
+@import 'assets/css/_variable.scss';
+
+body {
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px $sencond-color;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $primary-color;
+    outline: 1px solid $primary-color;
+  }
+
+}
+
+.text-primary {
+  color: $primary-color !important;
+}
+.text-secondary {
+  color: $sencond-color !important;
+}
+.bg-primary {
+  background-color: $primary-color !important;
+}
+.bg-secondary {
+  background-color: $sencond-color !important;
+}
+
+.ngx-datatable.material {
+  box-shadow: none !important;
+}
+.datatable-header-cell-wrapper {
+  font-weight: bold;
+}
+bs-calendar-container {
+  z-index: 1001 !important;
+}

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --port 3000",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -18,6 +18,15 @@
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
+    "@ckeditor/ckeditor5-angular": "^7.0.0",
+    "@ckeditor/ckeditor5-build-classic": "^40.0.0",
+    "@ckeditor/ckeditor5-core": "^40.0.0",
+    "@ckeditor/ckeditor5-engine": "^40.0.0",
+    "@ckeditor/ckeditor5-utils": "^40.0.0",
+    "@ckeditor/ckeditor5-watchdog": "^40.0.0",
+    "@swimlane/ngx-datatable": "^20.1.0",
+    "ngx-bootstrap": "^11.0.2",
+    "ngx-cookie-service": "^16.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
