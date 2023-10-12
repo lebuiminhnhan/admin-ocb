@@ -7,6 +7,7 @@ import { ROUTE_LINK } from 'src/helper/constants';
 import { GiftComponent } from '../gift/gift.component';
 import { InfoContactComponent } from '../info-contact/info-contact.component';
 import { InfoRegisterComponent } from '../info-register/info-register.component';
+import { SAminRole } from 'src/services/auth.guard';
 
 const routes: Routes = [
   {
@@ -15,7 +16,7 @@ const routes: Routes = [
     children: [
       {path: '', redirectTo: '/' + ROUTE_LINK.USER, pathMatch: 'full'},
       { path: ROUTE_LINK.USER, component: UserComponent },
-      { path: ROUTE_LINK.USER_SYSTEM, component: UserSystemComponent },
+      { path: ROUTE_LINK.USER_SYSTEM, component: UserSystemComponent, canActivate: [SAminRole] },
       { path: ROUTE_LINK.GIFT, component: GiftComponent },
       { path: ROUTE_LINK.INFO_CONTACT, component: InfoContactComponent },
       { path: ROUTE_LINK.INFO_REGISTER, component: InfoRegisterComponent },

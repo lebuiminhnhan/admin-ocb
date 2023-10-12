@@ -14,11 +14,9 @@ export class UserService extends BaseService {
   private userSubject: BehaviorSubject<UserModel>;
   public user: Observable<UserModel>;
   constructor(
-    http: HttpClient,
-    private storageService: StorageService,
-    cookieService: CookieService
+    http: HttpClient
   ) {
-    super(http, cookieService);
+    super(http);
     const user = JSON.parse(
       this.storageService.getItem(KEY_STORE.USER_STORE) || 'null'
     );

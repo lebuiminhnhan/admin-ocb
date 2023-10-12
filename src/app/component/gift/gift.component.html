@@ -67,13 +67,18 @@
                 bsDatepicker [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD/MM/YYYY'  }" />
             </div>
           </div>
+          <div class="col-12 col-md-3" *ngIf="isEditable || imgShow">
+            <img src="{{imgShow}}" alt="" class="img-fluid">
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm text-light"
+                role="status" aria-hidden="true"></span>
+          </div>
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label for="image">Upload ảnh</label>
               <div class="input-group">
                 <div class="custom-file">
-                  <input type="file" class="custom-file-input" id="image">
-                  <label class="custom-file-label" for="image">Chọn tệp tin</label>
+                  <input type="file" class="custom-file-input" id="image" (change)="onFileChange($event)">
+                  <label class="custom-file-label" for="image">{{formGift.get('image')?.value ? formGift.get('image')?.value.name :  'Chọn tệp tin' }}</label>
                 </div>
                 <div class="input-group-append">
                   <span class="input-group-text">Tải lên</span>
@@ -82,14 +87,14 @@
             </div>
           </div>
 
-          <div class="col-12 col-md-6 pt-5 text-center">
+          <div class="col-12 col-md-3 pt-5 text-center">
             <div class="form-check">
               <input type="checkbox" class="form-check-input" id="isHot" formControlName="isHot">
               <label class="form-check-label" for="isHot">Quà HOT</label>
             </div>
           </div>
 
-          <div class="col-12 col-md-12">
+          <div class="col-12 col-md-12 mt-3">
             <div class="form-group">
               <label for="name-gift">Mô tả chi tiết quà tặng </label>
               <ckeditor [editor]="editor" formControlName="description"></ckeditor>
@@ -98,7 +103,7 @@
         </form>
         <div class="row">
           <div class="col-12 text-right">
-            <button class="btn btn-sm btn-success" *ngIf="!isEditable" [disabled]="isLoading"
+            <button class="btn btn-sm btn-success" *ngIf="!isEditable" [disabled]="isLoading || formGift.invalid"
               (click)="createGift()"><span *ngIf="isLoading" class="spinner-border spinner-border-sm text-light"
                 role="status" aria-hidden="true"></span>THÊM</button>
             <button class="btn btn-sm btn-warning" *ngIf="isEditable" [disabled]="isLoading"

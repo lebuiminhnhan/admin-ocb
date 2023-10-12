@@ -1,10 +1,11 @@
-import { Injectable, Injector, OnInit } from '@angular/core';
+import { Injectable, Injector, OnInit, inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
-import { KEY_STORE } from 'src/helper/constants';
-import { UserService } from './user.service';
+import { KEY_STORE, ROUTE_LINK } from 'src/helper/constants';
+import { StorageService } from './storage.service';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -14,12 +15,12 @@ export class BaseService implements OnInit {
   static injector: Injector;
   protected _http: HttpClient | undefined;
   protected tokenKey!: string;
-  protected _cookieService!: CookieService;
-  protected _userService!: UserService;
-  constructor(public http: HttpClient, public cookieService: CookieService) {
+  cookieService: CookieService = inject(CookieService);
+  storageService: StorageService = inject(StorageService);
+  router: Router = inject(Router);
+  constructor(public http: HttpClient) {
     if (BaseService.injector) {
       this._http = http;
-      this._cookieService = cookieService;
     }
   }
 
@@ -110,8 +111,6 @@ export class BaseService implements OnInit {
       'Cache-control': 'no-cache',
       'Pragma': 'no-cache',
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
-      'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Origin,Accept, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers',
       'Access-Control-Allow-Credentials': 'true',
       'Accept': '*/*'
     };
@@ -132,7 +131,7 @@ export class BaseService implements OnInit {
         contentType = '';
         break;
       case 'file':
-        contentType = 'multipart/form-data';
+        contentType = 'multipart/form-data;boundary {}';
         break;
       case 'empty':
         contentType = '';
@@ -150,15 +149,16 @@ export class BaseService implements OnInit {
       headerOption['Authorization'] = "Bearer "+this.cookieService.get(KEY_STORE.TOKEN);
     }
 
-    const headers = new HttpHeaders(headerOption);
-
+    let headers = new HttpHeaders(headerOption);
     return headers;
   }
   private handleError(error: any) {
     console.log(error);
     switch (error.status) {
       case 401:
-        this._userService.logout();
+        this.storageService.removeItem(KEY_STORE.USER_STORE);
+        this.cookieService.delete(KEY_STORE.TOKEN);
+        this.router.navigate(['/', ROUTE_LINK.LOGIN]);
         break;
 
       default:

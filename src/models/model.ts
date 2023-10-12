@@ -3,13 +3,32 @@ export interface Deserializable {
 }
 export class GiftModel implements Deserializable {
   name: string = 'Thẻ viettel 10.000đ';
-  image: string = 'assets/img/viettel.png';
-  id?: number = 1;
+  image: any;
+  id: any;
   value: number = 100;
   isHot: boolean = false;
   dateTo:string = "";
   dateFrom: string = "";
   description: string = 'Description';
+  deserialize(input: any) {
+    Object.assign(this, input);
+    return this;
+  }
+}
+export class InfoContactModel implements Deserializable {
+  id: any;
+  name: string = '';
+  email: string = '';
+  subject: string = '';
+  message: string = '';
+  deserialize(input: any) {
+    Object.assign(this, input);
+    return this;
+  }
+}
+export class InfoRegisterModel implements Deserializable {
+  id: any;
+  email: string = '';
   deserialize(input: any) {
     Object.assign(this, input);
     return this;
@@ -36,16 +55,6 @@ export class LoginModel implements Deserializable {
   role: string = "";
   deserialize(input: any) {
     input.dataUser = new UserModel().deserialize(input.data);
-    Object.assign(this, input);
-    return this;
-  }
-}
-export class ContactModel implements Deserializable {
-  name: string = "";
-  email: string = "";
-  subject: string = "";
-  message: string = "";
-  deserialize(input: any) {
     Object.assign(this, input);
     return this;
   }
