@@ -10,9 +10,9 @@
     <ngx-datatable class="material" [rows]="giftList" [columns]="columns" [columnMode]="ColumnMode.force"
       [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10" [loadingIndicator]="isLoading">
       <ngx-datatable-column *ngFor="let col of columns" [name]="col.name" [prop]="col.prop" [pipe]="col.pipe"
-        [cellClass]="col.cellClass || ''">
+        [cellClass]="col.cellClass || ''" [width]="col.width || 150">
       </ngx-datatable-column>
-      <ngx-datatable-column name="Tùy chọn" [sortable]="false" prop="id">
+      <ngx-datatable-column name="Tùy chọn" [sortable]="false" prop="id" [width]="110" [cellClass]="'text-center'">
         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
 
           <button class="btn btn-xs btn-default mr-2" (click)="editModal(row, modalCreateUpdate)">
@@ -53,20 +53,24 @@
           </div>
           <div class="col-12 col-md-6">
             <div class="form-group">
-              <label for="dateTo-gift">Có hiệu lực từ </label>
-              <input [class.is-invalid]="formGift.get('dateTo')?.invalid && formGift.get('dateTo')?.touched" type="text"
-                id="dateTo-gift" class="form-control" formControlName="dateTo" placeholder="dd/mm/yyyy" bsDatepicker
-                [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD/MM/YYYY'  }" />
+              <label for="dateFrom-gift">Có hiệu lực từ </label>
+              <input [class.is-invalid]="formGift.get('dateFrom')?.invalid && formGift.get('dateFrom')?.touched"
+              type="text" id="dateFrom-gift" class="form-control" formControlName="dateFrom" placeholder="dd/mm/yyyy"
+              bsDatepicker [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD/MM/YYYY'  }" />
             </div>
           </div>
           <div class="col-12 col-md-6">
             <div class="form-group">
-              <label for="dateFrom-gift">Có hiệu lực đến </label>
-              <input [class.is-invalid]="formGift.get('dateFrom')?.invalid && formGift.get('dateFrom')?.touched"
-                type="text" id="dateFrom-gift" class="form-control" formControlName="dateFrom" placeholder="dd/mm/yyyy"
-                bsDatepicker [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD/MM/YYYY'  }" />
+              <label for="dateTo-gift">Có hiệu lực đến </label>
+              <input [class.is-invalid]="formGift.get('dateTo')?.invalid && formGift.get('dateTo')?.touched" type="text"
+              id="dateTo-gift" class="form-control" formControlName="dateTo" placeholder="dd/mm/yyyy" bsDatepicker
+              [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD/MM/YYYY'  }" />
             </div>
+            <span class="text-danger" *ngIf="isValidDateTime">
+              Có hiệu lực đến không được nhỏ hơn ngày bắt đầu
+            </span>
           </div>
+
           <div class="col-12 col-md-3" *ngIf="isEditable || imgShow">
             <img src="{{imgShow}}" alt="" class="img-fluid">
             <span *ngIf="isLoading" class="spinner-border spinner-border-sm text-light"
@@ -103,10 +107,10 @@
         </form>
         <div class="row">
           <div class="col-12 text-right">
-            <button class="btn btn-sm btn-success" *ngIf="!isEditable" [disabled]="isLoading || formGift.invalid"
+            <button class="btn btn-sm btn-success" *ngIf="!isEditable" [disabled]="isLoading || formGift.invalid || isValidDateTime"
               (click)="createGift()"><span *ngIf="isLoading" class="spinner-border spinner-border-sm text-light"
                 role="status" aria-hidden="true"></span>THÊM</button>
-            <button class="btn btn-sm btn-warning" *ngIf="isEditable" [disabled]="isLoading"
+            <button class="btn btn-sm btn-warning" *ngIf="isEditable" [disabled]="isLoading || formGift.invalid || isValidDateTime"
               (click)="updateGift()"><span *ngIf="isLoading" class="spinner-border spinner-border-sm text-light"
                 role="status" aria-hidden="true"></span>CẬP NHẬT</button>
           </div>

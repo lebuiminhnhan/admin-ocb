@@ -10,9 +10,9 @@
     <ngx-datatable class="material" [rows]="UserList" [columns]="columns" [columnMode]="ColumnMode.force"
       [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10" [loadingIndicator]="isLoading">
       <ngx-datatable-column *ngFor="let col of columns" [name]="col.name" [prop]="col.prop" [pipe]="col.pipe"
-        [cellClass]="col.cellClass || ''">
+        [cellClass]="col.cellClass || ''" [width]="col.width || 150">
       </ngx-datatable-column>
-      <ngx-datatable-column name="Tùy chọn" [sortable]="false" prop="id">
+      <ngx-datatable-column name="Tùy chọn" [sortable]="false" prop="id" [width]="110" [cellClass]="'text-center'">
         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
 
           <button class="btn btn-xs btn-default mr-2" (click)="editModal(row, modalCreateUpdate)">

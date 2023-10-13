@@ -31,6 +31,10 @@ body {
   background-color: $sencond-color !important;
 }
 
+.btn-primary {
+  border-color: $primary-color;
+}
+
 .ngx-datatable.material {
   box-shadow: none !important;
 }

@@ -22,7 +22,7 @@ export class GiftComponent implements OnInit {
   giftItem!: GiftModel;
   imgShow: any;
   columns = [
-    { name: 'ID', prop: 'id' },
+    { name: 'ID', prop: 'id', width: 70 },
     { name: 'Tên quà tặng', prop: 'name' },
     { name: 'Giá trị đổi', prop: 'value', cellClass: 'text-center' },
     { name: 'Hot', prop: 'isHot' },
@@ -31,6 +31,7 @@ export class GiftComponent implements OnInit {
   ];
   bsModalRef?: BsModalRef;
   modalRef?: BsModalRef;
+  errorValidateTime: string = '';
   giftForm: FormGroup = new FormGroup({
     id: new FormControl(''),
     name: new FormControl('', [Validators.required]),
@@ -57,6 +58,10 @@ export class GiftComponent implements OnInit {
   }
   get formGift() {
     return this.giftForm;
+  }
+
+  get isValidDateTime() {
+    return new Date(this.formGift.controls['dateFrom'].value).getTime() > new Date(this.formGift.controls['dateTo'].value).getTime();
   }
 
   onFileChange(event: any) {

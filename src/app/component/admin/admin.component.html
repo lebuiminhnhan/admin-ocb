@@ -4,7 +4,7 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        <a class="nav-link" data-widget="pushmenu" (click)="toggleSlidebar()" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="http://localhost:4200/" target="_blank" class="nav-link">OCB quà tặng</a>
@@ -29,14 +29,15 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a routerLink="" class="brand-link">
-      <img src="../../../assets/img/logo.png" alt="AdminLTE Logo" class="brand-image" style="opacity: .8">
-      <span class="brand-text font-weight-light">Admin Portal</span>
+      <img *ngIf="!isToggleSlibar" src="../../../assets/img/logo.png" alt="AdminLTE Logo" class="brand-image" style="opacity: .8">
+      <img *ngIf="isToggleSlibar" src="../../../assets/img/logo-mini.png" class="img-circle elevation-2 ml-2" width="40" alt="User Image">
+      <span class="brand-text font-weight-light" [ngClass]="{'ml-2': isToggleSlibar}">Admin Portal</span>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex" *ngIf="!isToggleSlibar">
         <div class="image">
           <img src="../../../assets/img/logo-mini.png" class="img-circle elevation-2" alt="User Image">
         </div>

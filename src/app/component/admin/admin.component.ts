@@ -15,6 +15,7 @@ export class AdminComponent implements OnInit {
   year = new Date().getFullYear();
   user: UserModel = new UserModel();
   route_link = ROUTE_LINK;
+  isToggleSlibar = false;
   constructor(private userService: UserService, private router: Router, private storageService: StorageService) {
     this.userService.user.subscribe((x) => (this.user = x));
   }
@@ -38,6 +39,16 @@ export class AdminComponent implements OnInit {
   logout() {
     this.userService.logout();
     this.router.navigate(['/' + ROUTE_LINK.LOGIN]);
+  }
+
+  toggleSlidebar() {
+    this.isToggleSlibar =!this.isToggleSlibar;
+    const body = document.querySelector('body');
+    if (this.isToggleSlibar) {
+      body?.classList.add('sidebar-collapse');
+    } else {
+      body?.classList.remove('sidebar-collapse');
+    }
   }
 
   titlePage() {

@@ -22,13 +22,13 @@ export class UserComponent implements OnInit {
   UserItem!: UserModel;
   imgShow: any;
   columns = [
-    { name: 'ID', prop: 'id' },
+    { name: 'ID', prop: 'id', width: 80 },
     { name: 'Tên khách hàng', prop: 'name' },
-    { name: 'Email', prop: 'email', cellClass: 'text-center' },
+    { name: 'Email', prop: 'email', cellClass: 'text-left' },
     { name: 'SĐT', prop: 'phoneNumber' },
     { name: 'Năm sinh', prop: 'dateOfBirth', pipe: this.datePipe() },
     { name: 'Địa chỉ', prop: 'address' },
-    { name: 'Điểm hiện có', prop: 'pointValue' },
+    { name: 'Điểm hiện có', prop: 'pointValue', cellClass: 'text-right' },
   ];
   bsModalRef?: BsModalRef;
   modalRef?: BsModalRef;
