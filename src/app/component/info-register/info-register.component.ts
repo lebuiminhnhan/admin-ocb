@@ -85,6 +85,7 @@ export class InfoRegisterComponent implements OnInit {
     this.apiService.deleteInfoRegister(this.InfoRegisterItem.id || 0).subscribe((response) => {
       this.modalRef?.hide();
       this.getInfoRegisterList();
+      alert("Xóa thành công!");
     });
   }
 

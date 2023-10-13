@@ -120,6 +120,7 @@ export class UserSystemComponent implements OnInit {
           this.getUserSystemList();
           this.onClosePopup();
         }
+        alert(res.message);
       });
   }
 
@@ -138,6 +139,7 @@ export class UserSystemComponent implements OnInit {
           this.getUserSystemList();
           this.onClosePopup();
         }
+        alert(res.message);
       });
   }
 
@@ -152,7 +154,7 @@ export class UserSystemComponent implements OnInit {
     console.log(item);
 
     this.UserSystemItem = item;
-    this.userActiveId = item.userId;
+    this.UserSystemForm.controls['userId'].setValue(item.userId);
     this.UserSystemForm.setValue(new UserSystemModel().deserialize(item));
     this.openModal(template, true);
     this.isEditable = true;
@@ -167,6 +169,7 @@ export class UserSystemComponent implements OnInit {
     this.apiService.deleteUserSystem(this.UserSystemItem.id || 0).subscribe((response) => {
       this.modalRef?.hide();
       this.getUserSystemList();
+      alert("Xóa thành công!");
     });
   }
 

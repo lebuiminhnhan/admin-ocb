@@ -118,6 +118,7 @@ export class GiftComponent implements OnInit {
           this.getGiftList();
           this.onClosePopup();
         }
+        alert(res.message);
       });
   }
 
@@ -139,6 +140,7 @@ export class GiftComponent implements OnInit {
           this.getGiftList();
           this.onClosePopup();
         }
+        alert(res.message);
       });
   }
 
@@ -183,6 +185,7 @@ export class GiftComponent implements OnInit {
     this.apiService.deleteGift(this.giftItem.id || 0).subscribe((response) => {
       this.modalRef?.hide();
       this.getGiftList();
+      alert("Xóa quà tặng thành công!");
     });
   }
 

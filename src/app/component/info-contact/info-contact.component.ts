@@ -89,6 +89,8 @@ export class InfoContactComponent implements OnInit {
     this.apiService.deleteInfoContact(this.InfoContactItem.id || 0).subscribe((response) => {
       this.modalRef?.hide();
       this.getInfoContactList();
+
+      alert("Xóa thành công!");
     });
   }
 

@@ -101,6 +101,7 @@ export class UserComponent implements OnInit {
           this.getUserList();
           this.onClosePopup();
         }
+        alert(res.message);
       });
   }
 
@@ -119,6 +120,7 @@ export class UserComponent implements OnInit {
           this.getUserList();
           this.onClosePopup();
         }
+        alert(res.message);
       });
   }
 
@@ -146,6 +148,7 @@ export class UserComponent implements OnInit {
     this.apiService.deleteUser(this.UserItem.id || 0).subscribe((response) => {
       this.modalRef?.hide();
       this.getUserList();
+      alert("Xóa thành công!");
     });
   }
 
