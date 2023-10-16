@@ -6,6 +6,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { KEY_STORE, ROUTE_LINK } from 'src/helper/constants';
 import { StorageService } from './storage.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 
 @Injectable({
@@ -164,5 +165,14 @@ export class BaseService implements OnInit {
       default:
         break;
     }
+  }
+
+  public alertMessage(message: string) {
+    Swal.fire({
+      title: 'Thông báo',
+      text: message,
+      timer: 2000,
+      timerProgressBar: true,
+    })
   }
 }

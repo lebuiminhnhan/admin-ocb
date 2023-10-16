@@ -82,7 +82,7 @@ export class GiftComponent implements OnInit {
       initialState: {},
       animated: true,
       ignoreBackdropClick: true,
-      class: 'modal-lg',
+      class: 'modal-lg modal-dialog-centered',
     };
     this.bsModalRef = this.modalService.show(template, initialState);
   }
@@ -118,7 +118,7 @@ export class GiftComponent implements OnInit {
           this.getGiftList();
           this.onClosePopup();
         }
-        alert(res.message);
+        this.apiService.alertMessage(res.message);
       });
   }
 
@@ -140,7 +140,7 @@ export class GiftComponent implements OnInit {
           this.getGiftList();
           this.onClosePopup();
         }
-        alert(res.message);
+        this.apiService.alertMessage(res.message);
       });
   }
 
@@ -178,14 +178,14 @@ export class GiftComponent implements OnInit {
 
   deleteModal(item: GiftModel, template: TemplateRef<any>) {
     this.giftItem = item;
-    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm modal-dialog-centered' });
   }
 
   confirm(): void {
     this.apiService.deleteGift(this.giftItem.id || 0).subscribe((response) => {
       this.modalRef?.hide();
       this.getGiftList();
-      alert("Xóa quà tặng thành công!");
+      this.apiService.alertMessage("Xóa quà tặng thành công!");
     });
   }
 

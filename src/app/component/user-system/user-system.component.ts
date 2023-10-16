@@ -84,7 +84,7 @@ export class UserSystemComponent implements OnInit {
       initialState: {},
       animated: true,
       ignoreBackdropClick: true,
-      class: 'modal-lg',
+      class: 'modal-lg modal-dialog-centered',
     };
     this.bsModalRef = this.modalService.show(template, initialState);
   }
@@ -120,7 +120,7 @@ export class UserSystemComponent implements OnInit {
           this.getUserSystemList();
           this.onClosePopup();
         }
-        alert(res.message);
+        this.apiService.alertMessage(res.message);
       });
   }
 
@@ -139,7 +139,7 @@ export class UserSystemComponent implements OnInit {
           this.getUserSystemList();
           this.onClosePopup();
         }
-        alert(res.message);
+        this.apiService.alertMessage(res.message);
       });
   }
 
@@ -162,14 +162,14 @@ export class UserSystemComponent implements OnInit {
 
   deleteModal(item: UserSystemModel, template: TemplateRef<any>) {
     this.UserSystemItem = item;
-    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm modal-dialog-centered' });
   }
 
   confirm(): void {
     this.apiService.deleteUserSystem(this.UserSystemItem.id || 0).subscribe((response) => {
       this.modalRef?.hide();
       this.getUserSystemList();
-      alert("Xóa thành công!");
+      this.apiService.alertMessage("Xóa thành công!");
     });
   }
 

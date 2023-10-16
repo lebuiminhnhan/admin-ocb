@@ -78,14 +78,14 @@ export class InfoRegisterComponent implements OnInit {
 
   deleteModal(item: InfoRegisterModel, template: TemplateRef<any>) {
     this.InfoRegisterItem = item;
-    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm modal-dialog-centered' });
   }
 
   confirm(): void {
     this.apiService.deleteInfoRegister(this.InfoRegisterItem.id || 0).subscribe((response) => {
       this.modalRef?.hide();
       this.getInfoRegisterList();
-      alert("Xóa thành công!");
+      this.apiService.alertMessage("Xóa thành công!");
     });
   }
 

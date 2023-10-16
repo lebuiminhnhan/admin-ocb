@@ -82,7 +82,7 @@ export class InfoContactComponent implements OnInit {
 
   deleteModal(item: InfoContactModel, template: TemplateRef<any>) {
     this.InfoContactItem = item;
-    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm modal-dialog-centered' });
   }
 
   confirm(): void {
@@ -90,7 +90,7 @@ export class InfoContactComponent implements OnInit {
       this.modalRef?.hide();
       this.getInfoContactList();
 
-      alert("Xóa thành công!");
+      this.apiService.alertMessage("Xóa thành công!");
     });
   }
 
